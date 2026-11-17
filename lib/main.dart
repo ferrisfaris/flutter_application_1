@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         // the application has a purple toolbar. Then, without quitting the app,
         // try changing the seedColor in the colorScheme below to Colors.green
         // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // reload" button in a Flutter-supported IDE, or press "r" if you used  
         // the command line to start the app).
         //
         // Notice that the counter didn't reset back to zero; the application
@@ -55,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _myMessage = 'Hello testing - testing!';
 
   void _incrementCounter() {
     setState(() {
@@ -102,13 +103,36 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('You have pushed the button this many times:'),
+            Text(_myMessage),
+            const SizedBox(height: 20),
+            const Text(
+              'You have pushed the button this many times:',
+            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+
+            const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _myMessage = 'Button 1 clicked!';
+                  });
+                },
+                child: const Text('Click Me'),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    _myMessage = 'Button 2 clicked!';
+                  });
+                },
+                child: const Text('Second Button'),
+              ),
           ],
         ),
       ),
