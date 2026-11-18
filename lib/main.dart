@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Mood Tracker',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Mood Tracker'),
     );
   }
 }
@@ -65,6 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
     });
   }
 
@@ -108,15 +114,16 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(_myMessage),
             const SizedBox(height: 20),
             const Text(
-              'You have pushed the button this many times:',
+              'Whats your favorite number?',
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
             const SizedBox(height: 20),
-              ElevatedButton(
+            SizedBox(
+              width: 200, height: 50,
+              child: ElevatedButton(
                 onPressed: () {
                   setState(() {
                     _myMessage = 'Button 1 clicked!';
@@ -124,23 +131,88 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: const Text('Click Me'),
               ),
+            ),
               const SizedBox(height: 12),
-              OutlinedButton(
-                onPressed: () {
-                  setState(() {
-                    _myMessage = 'Button 2 clicked!';
-                  });
-                },
-                child: const Text('Second Button'),
+              SizedBox(
+                width: 200, height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _myMessage = 'Button 2 clicked!';
+                    });
+                  },
+                  child: const Text('Second Button'),
+                ),
               ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FloatingActionButton(
+              onPressed: _decrementCounter,
+              tooltip: 'Decrement',
+              child: const Icon(Icons.remove),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  _myMessage = 'Floating Action Button clicked!';
+                });
+              },
+              tooltip: 'Change Message',
+              child: const Icon(Icons.message),
+            ),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SecondScreen()),
+                );
+              },
+              child: const Icon(Icons.info_outline),
+            )
+          
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Screen'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Nothing here yet.'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Go Back'),
+            ),
+          ],
+        ),
+    ),
     );
   }
 }
